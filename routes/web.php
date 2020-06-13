@@ -18,13 +18,3 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::group(['prefix' => 'admin'], function () {
-    Route::group(['middleware' => 'auth.admin'], function () {
-        Route::get('/index', 'Admin\IndexController@index');
-    });
- 
-    Route::get('login', 'Admin\LoginController@showLoginForm')->name('admin.login');
-    Route::post('login', 'Admin\LoginController@login');
-    Route::post('logout', 'Admin\LoginController@logout');
-});
