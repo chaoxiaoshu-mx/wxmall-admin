@@ -1,0 +1,93 @@
+Admin	Admin.php	/^class Admin extends Authenticatable$/;"	c
+fillable	Admin.php	/^    protected $fillable = [$/;"	v
+hidden	Admin.php	/^    protected $hidden = [$/;"	v
+Kernel	Console\Kernel.php	/^class Kernel extends ConsoleKernel$/;"	c
+commands	Console\Kernel.php	/^    protected $commands = [$/;"	v
+commands	Console\Kernel.php	/^    protected function commands()$/;"	f
+schedule	Console\Kernel.php	/^    protected function schedule(Schedule $schedule)$/;"	f
+Handler	Exceptions\Handler.php	/^class Handler extends ExceptionHandler$/;"	c
+dontFlash	Exceptions\Handler.php	/^    protected $dontFlash = [$/;"	v
+dontReport	Exceptions\Handler.php	/^    protected $dontReport = [$/;"	v
+render	Exceptions\Handler.php	/^    public function render($request, Exception $exception)$/;"	f
+report	Exceptions\Handler.php	/^    public function report(Exception $exception)$/;"	f
+IndexController	Http\Controllers\Admin\IndexController.php	/^class IndexController extends Controller$/;"	c
+index	Http\Controllers\Admin\IndexController.php	/^    public function index()$/;"	f
+LoginController	Http\Controllers\Admin\LoginController.php	/^class LoginController extends Controller$/;"	c
+__construct	Http\Controllers\Admin\LoginController.php	/^    public function __construct()$/;"	f
+guard	Http\Controllers\Admin\LoginController.php	/^    protected function guard()$/;"	f
+redirectTo	Http\Controllers\Admin\LoginController.php	/^    protected $redirectTo = '\/admin';$/;"	v
+showLoginForm	Http\Controllers\Admin\LoginController.php	/^    public function showLoginForm()$/;"	f
+username	Http\Controllers\Admin\LoginController.php	/^    public function username()$/;"	f
+ForgotPasswordController	Http\Controllers\Auth\ForgotPasswordController.php	/^class ForgotPasswordController extends Controller$/;"	c
+__construct	Http\Controllers\Auth\ForgotPasswordController.php	/^    public function __construct()$/;"	f
+LoginController	Http\Controllers\Auth\LoginController.php	/^class LoginController extends Controller$/;"	c
+__construct	Http\Controllers\Auth\LoginController.php	/^    public function __construct()$/;"	f
+redirectTo	Http\Controllers\Auth\LoginController.php	/^    protected $redirectTo = '\/home';$/;"	v
+RegisterController	Http\Controllers\Auth\RegisterController.php	/^class RegisterController extends Controller$/;"	c
+__construct	Http\Controllers\Auth\RegisterController.php	/^    public function __construct()$/;"	f
+create	Http\Controllers\Auth\RegisterController.php	/^    protected function create(array $data)$/;"	f
+redirectTo	Http\Controllers\Auth\RegisterController.php	/^    protected $redirectTo = '\/home';$/;"	v
+validator	Http\Controllers\Auth\RegisterController.php	/^    protected function validator(array $data)$/;"	f
+ResetPasswordController	Http\Controllers\Auth\ResetPasswordController.php	/^class ResetPasswordController extends Controller$/;"	c
+__construct	Http\Controllers\Auth\ResetPasswordController.php	/^    public function __construct()$/;"	f
+redirectTo	Http\Controllers\Auth\ResetPasswordController.php	/^    protected $redirectTo = '\/home';$/;"	v
+VerificationController	Http\Controllers\Auth\VerificationController.php	/^class VerificationController extends Controller$/;"	c
+__construct	Http\Controllers\Auth\VerificationController.php	/^    public function __construct()$/;"	f
+redirectTo	Http\Controllers\Auth\VerificationController.php	/^    protected $redirectTo = '\/home';$/;"	v
+Controller	Http\Controllers\Controller.php	/^class Controller extends BaseController$/;"	c
+HomeController	Http\Controllers\HomeController.php	/^class HomeController extends Controller$/;"	c
+__construct	Http\Controllers\HomeController.php	/^    public function __construct()$/;"	f
+index	Http\Controllers\HomeController.php	/^    public function index()$/;"	f
+Kernel	Http\Kernel.php	/^class Kernel extends HttpKernel$/;"	c
+middleware	Http\Kernel.php	/^    protected $middleware = [$/;"	v
+middlewareGroups	Http\Kernel.php	/^    protected $middlewareGroups = [$/;"	v
+middlewarePriority	Http\Kernel.php	/^    protected $middlewarePriority = [$/;"	v
+routeMiddleware	Http\Kernel.php	/^    protected $routeMiddleware = [$/;"	v
+AuthAdmin	Http\Middleware\AuthAdmin.php	/^class AuthAdmin$/;"	c
+handle	Http\Middleware\AuthAdmin.php	/^    public function handle($request, Closure $next)$/;"	f
+Authenticate	Http\Middleware\Authenticate.php	/^class Authenticate extends Middleware$/;"	c
+redirectTo	Http\Middleware\Authenticate.php	/^    protected function redirectTo($request)$/;"	f
+CheckForMaintenanceMode	Http\Middleware\CheckForMaintenanceMode.php	/^class CheckForMaintenanceMode extends Middleware$/;"	c
+except	Http\Middleware\CheckForMaintenanceMode.php	/^    protected $except = [$/;"	v
+EncryptCookies	Http\Middleware\EncryptCookies.php	/^class EncryptCookies extends Middleware$/;"	c
+except	Http\Middleware\EncryptCookies.php	/^    protected $except = [$/;"	v
+GuestAdmin	Http\Middleware\GuestAdmin.php	/^class GuestAdmin$/;"	c
+handle	Http\Middleware\GuestAdmin.php	/^    public function handle($request, Closure $next)$/;"	f
+RedirectIfAuthenticated	Http\Middleware\RedirectIfAuthenticated.php	/^class RedirectIfAuthenticated$/;"	c
+guard	Http\Middleware\RedirectIfAuthenticated.php	/^    public function handle($request, Closure $next, $guard = null)$/;"	v
+handle	Http\Middleware\RedirectIfAuthenticated.php	/^    public function handle($request, Closure $next, $guard = null)$/;"	f
+TrimStrings	Http\Middleware\TrimStrings.php	/^class TrimStrings extends Middleware$/;"	c
+except	Http\Middleware\TrimStrings.php	/^    protected $except = [$/;"	v
+TrustProxies	Http\Middleware\TrustProxies.php	/^class TrustProxies extends Middleware$/;"	c
+headers	Http\Middleware\TrustProxies.php	/^    protected $headers = Request::HEADER_X_FORWARDED_ALL;$/;"	v
+proxies	Http\Middleware\TrustProxies.php	/^    protected $proxies;$/;"	v
+VerifyCsrfToken	Http\Middleware\VerifyCsrfToken.php	/^class VerifyCsrfToken extends Middleware$/;"	c
+addHttpCookie	Http\Middleware\VerifyCsrfToken.php	/^    protected $addHttpCookie = true;$/;"	v
+except	Http\Middleware\VerifyCsrfToken.php	/^    protected $except = [$/;"	v
+AppServiceProvider	Providers\AppServiceProvider.php	/^class AppServiceProvider extends ServiceProvider$/;"	c
+boot	Providers\AppServiceProvider.php	/^    public function boot()$/;"	f
+register	Providers\AppServiceProvider.php	/^    public function register()$/;"	f
+AuthServiceProvider	Providers\AuthServiceProvider.php	/^class AuthServiceProvider extends ServiceProvider$/;"	c
+boot	Providers\AuthServiceProvider.php	/^    public function boot()$/;"	f
+policies	Providers\AuthServiceProvider.php	/^    protected $policies = [$/;"	v
+BroadcastServiceProvider	Providers\BroadcastServiceProvider.php	/^class BroadcastServiceProvider extends ServiceProvider$/;"	c
+boot	Providers\BroadcastServiceProvider.php	/^    public function boot()$/;"	f
+EventServiceProvider	Providers\EventServiceProvider.php	/^class EventServiceProvider extends ServiceProvider$/;"	c
+boot	Providers\EventServiceProvider.php	/^    public function boot()$/;"	f
+listen	Providers\EventServiceProvider.php	/^    protected $listen = [$/;"	v
+RouteServiceProvider	Providers\RouteServiceProvider.php	/^class RouteServiceProvider extends ServiceProvider$/;"	c
+boot	Providers\RouteServiceProvider.php	/^    public function boot()$/;"	f
+map	Providers\RouteServiceProvider.php	/^    public function map()$/;"	f
+mapApiRoutes	Providers\RouteServiceProvider.php	/^    protected function mapApiRoutes()$/;"	f
+mapWebRoutes	Providers\RouteServiceProvider.php	/^    protected function mapWebRoutes()$/;"	f
+namespace	Providers\RouteServiceProvider.php	/^    protected $namespace = 'App\\Http\\Controllers';$/;"	v
+User	User.php	/^class User extends Authenticatable$/;"	c
+casts	User.php	/^    protected $casts = [$/;"	v
+fillable	User.php	/^    protected $fillable = [$/;"	v
+hidden	User.php	/^    protected $hidden = [$/;"	v
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_PROGRAM_VERSION	5.8	//
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/

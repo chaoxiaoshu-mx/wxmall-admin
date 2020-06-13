@@ -1,0 +1,93 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Admin	.\Admin.php	/^class Admin extends Authenticatable$/;"	c
+AppServiceProvider	.\Providers\AppServiceProvider.php	/^class AppServiceProvider extends ServiceProvider$/;"	c
+AuthAdmin	.\Http\Middleware\AuthAdmin.php	/^class AuthAdmin$/;"	c
+AuthServiceProvider	.\Providers\AuthServiceProvider.php	/^class AuthServiceProvider extends ServiceProvider$/;"	c
+Authenticate	.\Http\Middleware\Authenticate.php	/^class Authenticate extends Middleware$/;"	c
+BroadcastServiceProvider	.\Providers\BroadcastServiceProvider.php	/^class BroadcastServiceProvider extends ServiceProvider$/;"	c
+CheckForMaintenanceMode	.\Http\Middleware\CheckForMaintenanceMode.php	/^class CheckForMaintenanceMode extends Middleware$/;"	c
+Controller	.\Http\Controllers\Controller.php	/^class Controller extends BaseController$/;"	c
+EncryptCookies	.\Http\Middleware\EncryptCookies.php	/^class EncryptCookies extends Middleware$/;"	c
+EventServiceProvider	.\Providers\EventServiceProvider.php	/^class EventServiceProvider extends ServiceProvider$/;"	c
+ForgotPasswordController	.\Http\Controllers\Auth\ForgotPasswordController.php	/^class ForgotPasswordController extends Controller$/;"	c
+GuestAdmin	.\Http\Middleware\GuestAdmin.php	/^class GuestAdmin$/;"	c
+Handler	.\Exceptions\Handler.php	/^class Handler extends ExceptionHandler$/;"	c
+HomeController	.\Http\Controllers\HomeController.php	/^class HomeController extends Controller$/;"	c
+IndexController	.\Http\Controllers\Admin\IndexController.php	/^class IndexController extends Controller$/;"	c
+Kernel	.\Console\Kernel.php	/^class Kernel extends ConsoleKernel$/;"	c
+Kernel	.\Http\Kernel.php	/^class Kernel extends HttpKernel$/;"	c
+LoginController	.\Http\Controllers\Admin\LoginController.php	/^class LoginController extends Controller$/;"	c
+LoginController	.\Http\Controllers\Auth\LoginController.php	/^class LoginController extends Controller$/;"	c
+RedirectIfAuthenticated	.\Http\Middleware\RedirectIfAuthenticated.php	/^class RedirectIfAuthenticated$/;"	c
+RegisterController	.\Http\Controllers\Auth\RegisterController.php	/^class RegisterController extends Controller$/;"	c
+ResetPasswordController	.\Http\Controllers\Auth\ResetPasswordController.php	/^class ResetPasswordController extends Controller$/;"	c
+RouteServiceProvider	.\Providers\RouteServiceProvider.php	/^class RouteServiceProvider extends ServiceProvider$/;"	c
+TrimStrings	.\Http\Middleware\TrimStrings.php	/^class TrimStrings extends Middleware$/;"	c
+TrustProxies	.\Http\Middleware\TrustProxies.php	/^class TrustProxies extends Middleware$/;"	c
+User	.\User.php	/^class User extends Authenticatable$/;"	c
+VerificationController	.\Http\Controllers\Auth\VerificationController.php	/^class VerificationController extends Controller$/;"	c
+VerifyCsrfToken	.\Http\Middleware\VerifyCsrfToken.php	/^class VerifyCsrfToken extends Middleware$/;"	c
+__construct	.\Http\Controllers\Admin\LoginController.php	/^    public function __construct()$/;"	f
+__construct	.\Http\Controllers\Auth\ForgotPasswordController.php	/^    public function __construct()$/;"	f
+__construct	.\Http\Controllers\Auth\LoginController.php	/^    public function __construct()$/;"	f
+__construct	.\Http\Controllers\Auth\RegisterController.php	/^    public function __construct()$/;"	f
+__construct	.\Http\Controllers\Auth\ResetPasswordController.php	/^    public function __construct()$/;"	f
+__construct	.\Http\Controllers\Auth\VerificationController.php	/^    public function __construct()$/;"	f
+__construct	.\Http\Controllers\HomeController.php	/^    public function __construct()$/;"	f
+addHttpCookie	.\Http\Middleware\VerifyCsrfToken.php	/^    protected $addHttpCookie = true;$/;"	v
+boot	.\Providers\AppServiceProvider.php	/^    public function boot()$/;"	f
+boot	.\Providers\AuthServiceProvider.php	/^    public function boot()$/;"	f
+boot	.\Providers\BroadcastServiceProvider.php	/^    public function boot()$/;"	f
+boot	.\Providers\EventServiceProvider.php	/^    public function boot()$/;"	f
+boot	.\Providers\RouteServiceProvider.php	/^    public function boot()$/;"	f
+casts	.\User.php	/^    protected $casts = [$/;"	v
+commands	.\Console\Kernel.php	/^    protected $commands = [$/;"	v
+commands	.\Console\Kernel.php	/^    protected function commands()$/;"	f
+create	.\Http\Controllers\Auth\RegisterController.php	/^    protected function create(array $data)$/;"	f
+dontFlash	.\Exceptions\Handler.php	/^    protected $dontFlash = [$/;"	v
+dontReport	.\Exceptions\Handler.php	/^    protected $dontReport = [$/;"	v
+except	.\Http\Middleware\CheckForMaintenanceMode.php	/^    protected $except = [$/;"	v
+except	.\Http\Middleware\EncryptCookies.php	/^    protected $except = [$/;"	v
+except	.\Http\Middleware\TrimStrings.php	/^    protected $except = [$/;"	v
+except	.\Http\Middleware\VerifyCsrfToken.php	/^    protected $except = [$/;"	v
+fillable	.\Admin.php	/^    protected $fillable = [$/;"	v
+fillable	.\User.php	/^    protected $fillable = [$/;"	v
+guard	.\Http\Controllers\Admin\LoginController.php	/^    protected function guard()$/;"	f
+guard	.\Http\Middleware\RedirectIfAuthenticated.php	/^    public function handle($request, Closure $next, $guard = null)$/;"	v
+handle	.\Http\Middleware\AuthAdmin.php	/^    public function handle($request, Closure $next)$/;"	f
+handle	.\Http\Middleware\GuestAdmin.php	/^    public function handle($request, Closure $next)$/;"	f
+handle	.\Http\Middleware\RedirectIfAuthenticated.php	/^    public function handle($request, Closure $next, $guard = null)$/;"	f
+headers	.\Http\Middleware\TrustProxies.php	/^    protected $headers = Request::HEADER_X_FORWARDED_ALL;$/;"	v
+hidden	.\Admin.php	/^    protected $hidden = [$/;"	v
+hidden	.\User.php	/^    protected $hidden = [$/;"	v
+index	.\Http\Controllers\Admin\IndexController.php	/^    public function index()$/;"	f
+index	.\Http\Controllers\HomeController.php	/^    public function index()$/;"	f
+listen	.\Providers\EventServiceProvider.php	/^    protected $listen = [$/;"	v
+map	.\Providers\RouteServiceProvider.php	/^    public function map()$/;"	f
+mapApiRoutes	.\Providers\RouteServiceProvider.php	/^    protected function mapApiRoutes()$/;"	f
+mapWebRoutes	.\Providers\RouteServiceProvider.php	/^    protected function mapWebRoutes()$/;"	f
+middleware	.\Http\Kernel.php	/^    protected $middleware = [$/;"	v
+middlewareGroups	.\Http\Kernel.php	/^    protected $middlewareGroups = [$/;"	v
+middlewarePriority	.\Http\Kernel.php	/^    protected $middlewarePriority = [$/;"	v
+namespace	.\Providers\RouteServiceProvider.php	/^    protected $namespace = 'App\\Http\\Controllers';$/;"	v
+policies	.\Providers\AuthServiceProvider.php	/^    protected $policies = [$/;"	v
+proxies	.\Http\Middleware\TrustProxies.php	/^    protected $proxies;$/;"	v
+redirectTo	.\Http\Controllers\Admin\LoginController.php	/^    protected $redirectTo = '\/admin';$/;"	v
+redirectTo	.\Http\Controllers\Auth\LoginController.php	/^    protected $redirectTo = '\/home';$/;"	v
+redirectTo	.\Http\Controllers\Auth\RegisterController.php	/^    protected $redirectTo = '\/home';$/;"	v
+redirectTo	.\Http\Controllers\Auth\ResetPasswordController.php	/^    protected $redirectTo = '\/home';$/;"	v
+redirectTo	.\Http\Controllers\Auth\VerificationController.php	/^    protected $redirectTo = '\/home';$/;"	v
+redirectTo	.\Http\Middleware\Authenticate.php	/^    protected function redirectTo($request)$/;"	f
+register	.\Providers\AppServiceProvider.php	/^    public function register()$/;"	f
+render	.\Exceptions\Handler.php	/^    public function render($request, Exception $exception)$/;"	f
+report	.\Exceptions\Handler.php	/^    public function report(Exception $exception)$/;"	f
+routeMiddleware	.\Http\Kernel.php	/^    protected $routeMiddleware = [$/;"	v
+schedule	.\Console\Kernel.php	/^    protected function schedule(Schedule $schedule)$/;"	f
+showLoginForm	.\Http\Controllers\Admin\LoginController.php	/^    public function showLoginForm()$/;"	f
+username	.\Http\Controllers\Admin\LoginController.php	/^    public function username()$/;"	f
+validator	.\Http\Controllers\Auth\RegisterController.php	/^    protected function validator(array $data)$/;"	f
