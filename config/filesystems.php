@@ -64,6 +64,15 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        'admin' => [
+            // 磁盘 本地
+            'driver' => 'local',
+            // 上传根目录
+            'root' => public_path('upload/files'),
+            'visibility' => 'public',
+            'url' => env('APP_URL') . '/upload/files',
+        ],
+
     ],
 
 ];
