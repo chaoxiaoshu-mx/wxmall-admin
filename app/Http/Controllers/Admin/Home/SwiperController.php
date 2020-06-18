@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Validator;
+use Excption;
+use DB;
+use App\Http\Requests\SwiperValidate;
 
 class SwiperController extends Controller
 {
@@ -17,7 +20,8 @@ class SwiperController extends Controller
      */
     public function index()
     {
-        return view('admin.home_setting.swiper');
+        $swipers = Swiper::all();
+        return view('admin.settings.swiper.index', compact('swipers'));
     }
 
     /**
@@ -27,7 +31,8 @@ class SwiperController extends Controller
      */
     public function create()
     {
-        return view('admin.home_setting.swiper-add');
+        $swiper = null;
+        return view('admin.settings.swiper.add', compact('swiper'));
     }
 
     /**
@@ -36,18 +41,45 @@ class SwiperController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SwiperValidate $request)
     {
-        $this->validate($request, [
+        // 自定义验证规则
+        $rules = [
             'navigator_url' => 'required|max:255',
             'open_type' => 'required',
             'goods_id' => 'required|numeric|min:1',
-        ]);
- 
-        $uploadSuccess = $this->upload($request->file);
-        if ($uploadSuccess) {
+            'file'      => 'required|image'
+        ];
+        // 自定义验证信息
+        $messages = [
+            'navigator_url.required' => '跳转链接不能为空',
+            'goods_id.min' => '商品ID必须是大于0的数字',
+            'file.image'    => '只能上传图片文件'
+        ];
+        // 验证
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        $upload = $this->upload($request->file);
+        if ($upload) {
+            $request['image_src'] = '/upload/files/' . $upload;
+            // $request->merge('image_src', $upload);  
+            // dd($request->except('_token'));
             // 上传成功
-            return response()->json('success', 200);
+            DB::beginTransaction();
+            try{
+
+                Swiper::create($request->except('_token'));
+                DB::commit();
+                $swipers = Swiper::all();
+                return view('admin.settings.swiper.index', compact('swipers'));
+                return response()->json(['code' => '200', '保存成功']);
+            }catch(Exception $e) {
+                DB::rollBack();
+                return response()->json(['code' => '0', '保存失败', 'data' => $e->getMessage()]);
+            }
         } else {
             return response()->json('fail', 201);
         }
@@ -70,9 +102,13 @@ class SwiperController extends Controller
      * @param  \App\Model\Swiper  $swiper
      * @return \Illuminate\Http\Response
      */
-    public function edit(Swiper $swiper)
+    public function edit($id)
     {
-        //
+        $swiper = Swiper::find($id);
+        if (!$swiper) {
+            return null;
+        }
+        return view('admin.settings.swiper.edit', compact('swiper'));
     }
 
     /**
@@ -82,9 +118,42 @@ class SwiperController extends Controller
      * @param  \App\Model\Swiper  $swiper
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Swiper $swiper)
+    public function update(Request $request, $id)
     {
-        //
+        // 自定义验证规则
+        $rules = [
+            'navigator_url' => 'required|max:255',
+            'open_type' => 'required',
+            'goods_id' => 'required|numeric|min:1',
+        ];
+        // 自定义验证信息
+        $messages = [
+            'navigator_url.required' => '跳转链接不能为空',
+            'goods_id.min' => '商品ID必须是大于0的数字',
+        ];
+        // 验证
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        if ($request->file !== null) {
+            $upload = $this->upload($request->file);
+            $request['image_src'] = '/upload/files/' . $upload;
+        }
+        DB::beginTransaction();
+        try{
+            $swiper = Swiper::find($id);
+            $result = $swiper -> update($request->except('_token'));
+
+            DB::commit();
+            $swipers = Swiper::all();
+            return view('admin.settings.swiper.index', compact('swipers'));
+            return response()->json(['code' => '200', '保存成功']);
+        }catch(Exception $e) {
+            DB::rollBack();
+            return response()->json(['code' => '0', '保存失败', 'data' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -93,10 +162,12 @@ class SwiperController extends Controller
      * @param  \App\Model\Swiper  $swiper
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Swiper $swiper)
+    public function destroy($id)
     {
-        //
-    }
+        $swiper = Swiper::find($id);
+        $swiper->delete();
+    }   
+
 
     public function upload($file)
     {
@@ -113,7 +184,13 @@ class SwiperController extends Controller
             $filename = uniqid().'.'.$ext;
             $bool = Storage::disk()->put($filename,file_get_contents($realPath));
             // 是否上传成功
-            return $bool;
+            if ($bool) {
+                return $filename;
+            }
+            return false;
         }
     }
+
+    
+
 }

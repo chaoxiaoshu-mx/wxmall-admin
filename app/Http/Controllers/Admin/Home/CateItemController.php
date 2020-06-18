@@ -15,7 +15,8 @@ class CateItemController extends Controller
      */
     public function index()
     {
-        //
+        $cate_items = CateItem::all();
+        return view('admin.settings.cate_item.index', compact('cate_items'));
     }
 
     /**

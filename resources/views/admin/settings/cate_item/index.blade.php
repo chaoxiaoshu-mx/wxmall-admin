@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
 <head>
 <meta charset="utf-8">
@@ -19,20 +19,19 @@
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>图片列表</title>
+<title>轮播图列表</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 图片管理 <span class="c-gray en">&gt;</span> 图片列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 轮播图管理 <span class="c-gray en">&gt;</span> 轮播图列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 	
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="picture_add('添加轮播图','/admin/home/swiper/create')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加轮播图</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a class="btn btn-primary radius" onclick="cate_item_add('添加轮播图','/admin/home/cate_item/create')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加轮播图</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
 				<tr class="text-c">
-					<th width="40"><input name="" type="checkbox" value=""></th>
 					<th width="80">ID</th>
-					<th width="80">图片</th>
+					<th width="80">轮播图</th>
 					<th width="100">跳转链接</th>
 					<th width="100">跳转方式</th>
 					<th width="80">商品ID</th>
@@ -41,18 +40,19 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="text-c">
-					<td><input name="" type="checkbox" value=""></td>
-					<td>001</td>
-					<td><a href="javascript:;" onClick="picture_edit('图库编辑','picture-show.html','10001')"><img width="210" class="picture-thumb" src="/upload/files/5ee5cadc5ea17.jpg"></a></td>
-					<td>跳转链接</td>
-					<td>switchTab</td>
-					
-					<td>1</td>
-					<td>2014-6-11 11:11:42</td>
-					
-					<td class="td-manage"><a style="text-decoration:none" onClick="picture_stop(this,'10001')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a style="text-decoration:none" class="ml-5" onClick="picture_edit('图库编辑','picture-add.html','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="picture_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-				</tr>
+				@foreach($cate_items as $cate_item)
+					<tr class="text-c">
+						<td>{{$cate_item->id}}</td>
+						<td>
+							<img width="210" class="cate_item-thumb" src="{{$cate_item->image_src}}">
+						</td>
+					    <td>{{$cate_item->navigator_url}}</td>
+					    <td>{{$cate_item->open_type}}</td>
+					    <td>{{$cate_item->goods_id}}</td>
+					    <td>{{$cate_item->updated_at}}</td>
+						<td class="td-manage"><a style="text-decoration:none" onClick="cate_item_stop(this,'10001')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a style="text-decoration:none" class="ml-5" onClick="cate_item_edit('修改轮播图','/admin/home/cate_item/{{$cate_item->id}}/edit')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="cate_item_del(this,'{{$cate_item->id}}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				    </tr>
+				@endforeach
 			</tbody>
 		</table>
 	</div>
@@ -74,12 +74,12 @@ $('.table-sort').dataTable({
 	"bStateSave": true,//状态保存
 	"aoColumnDefs": [
 	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-	  {"orderable":false,"aTargets":[1, 2, 3, 4, 5, 6, 7]}// 制定列不参与排序
+	  {"orderable":false,"aTargets":[1, 2, 3, 4, 5, 6]}// 制定列不参与排序
 	]
 });
 
-/*图片-添加*/
-function picture_add(title,url){
+/*轮播图-添加*/
+function cate_item_add(title,url){
 	var index = layer.open({
 		type: 2,
 		title: title,
@@ -88,8 +88,8 @@ function picture_add(title,url){
 	layer.full(index);
 }
 
-/*图片-查看*/
-function picture_show(title,url,id){
+/*轮播图-查看*/
+function cate_item_show(title,url,id){
 	var index = layer.open({
 		type: 2,
 		title: title,
@@ -98,8 +98,8 @@ function picture_show(title,url,id){
 	layer.full(index);
 }
 
-/*图片-编辑*/
-function picture_edit(title,url,id){
+/*轮播图-编辑*/
+function cate_item_edit(title,url){
 	var index = layer.open({
 		type: 2,
 		title: title,
@@ -108,13 +108,34 @@ function picture_edit(title,url,id){
 	layer.full(index);
 }
 
-/*图片-删除*/
-function picture_del(obj,id){
+/*轮播图-删除*/
+function cate_item_del(obj, id){
 	layer.confirm('确认要删除吗？',function(index){
 		$.ajax({
-			type: 'POST',
-			url: '',
-			dataType: 'json',
+			type: 'DELETE',
+			url: '/admin/home/cate_item/' + id,
+			data: {
+				'_token':'{{csrf_token()}}'
+			},
+			success: function(data){
+				$(obj).parents("tr").remove();
+				layer.msg('已删除!',{icon:1,time:1000});
+			},
+			error:function(data) {
+				console.log(data.msg);
+			},
+		});		
+	});
+}
+/*批量删除 */
+function batchDel() {
+	layer.confirm('确认要删除吗？',function(index){
+		$.ajax({
+			type: 'DELETE',
+			url: '/admin/home/cate_item/' + id,
+			data: {
+				'_token':'{{csrf_token()}}'
+			},
 			success: function(data){
 				$(obj).parents("tr").remove();
 				layer.msg('已删除!',{icon:1,time:1000});

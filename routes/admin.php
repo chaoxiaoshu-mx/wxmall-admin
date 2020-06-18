@@ -11,5 +11,6 @@ Route::post('logout', 'LoginController@logout');
 
 Route::group(['prefix' => 'home', 'namespace' => 'Home'], function() {
 	Route::resource('/swiper', 'SwiperController');
-	Route::post('/swiper/upload', 'SwiperController@upload');
+	Route::resource('/cate_item', 'CateItemController');
+
 });

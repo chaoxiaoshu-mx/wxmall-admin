@@ -4,8 +4,10 @@
 <meta charset="utf-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="viewport" content="
+width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <!--[if lt IE 9]>
 <script type="text/javascript" src="lib/html5shiv.js"></script>
 <script type="text/javascript" src="lib/respond.min.js"></script>
@@ -19,20 +21,28 @@
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>新增图片</title>
+<title>新增轮播图</title>
 <link href="{{asset('lib/webuploader/0.1.5/webuploader.css')}}" rel="stylesheet" type="text/css" />
+<style>
+	.error {
+		color: red;
+	}
+</style>
 </head>
 <body>
 <div class="page-container">
-	<form class="form form-horizontal" id="form-article-add" action="/admin/home/swiper" enctype="multipart/form-data" method="POST">
-				        {{ csrf_field() }}           
-
+	<form class="form form-horizontal" id="form-swiper-add" 
+	enctype="multipart/form-data">
+        {{ csrf_field() }}   
+        <input type="hidden" name="_method" value="put"/>    
+        <input type="hidden" name="id" value="{{$swiper?$swiper->id:''}}">    
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">跳转链接：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="" name="navigator_url">
+				<input type="text" class="input-text" 
+				value="{{$swiper?$swiper->navigator_url:''}}" placeholder="" id="" name="navigator_url">
 				@if ($errors->has('navigator_url'))
-				    {{ $errors->first('navigator_url') }}
+				    <p class="error">{{ $errors->first('navigator_url') }}</p>
 				@endif
 			</div>
 		</div>
@@ -54,9 +64,10 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">商品ID：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="0" placeholder="" id="" name="goods_id">
+				<input type="text" class="input-text" 
+				value="{{$swiper?$swiper->goods_id:''}}" placeholder="" id="" name="goods_id">
 				@if ($errors->has('goods_id'))
-				    {{ $errors->first('goods_id') }}
+				    <p class="error">{{ $errors->first('goods_id') }}</p>
 				@endif
 			</div>
 		</div>
@@ -64,13 +75,17 @@
 			<label class="form-label col-xs-4 col-sm-2">轮播图：</label>
 			<div class="formControls col-xs-8 col-sm-9" style="margin-bottom: 20px">
 				<label for="file">选择文件</label>
-		        <input id="file" type="file" class="form-control" name="file" required>
+		        <input id="file" type="file" class="form-control" name="file" 
+		        	value="{{$swiper?$swiper->image_src:''}}">
+		        @if ($errors->has('file'))
+				    <p class="error">{{ $errors->first('file') }}</p>
+				@endif
 			</div>
 		</div>
 	
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+				<button class="btn btn-primary radius" type="button" onClick="swiper_submit({{$swiper?$swiper->id:''}})"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
 				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 			</div>
 		</div>
@@ -94,7 +109,40 @@ function article_save(){
 	alert("刷新父级的时候会自动关闭弹层。")
 	window.parent.location.reload();
 }
+function swiper_submit($id) {
+	console.log($id);
+	if ($id === '' || $id === undefined) {
+		console.log('POST')
+		// 新增
+		$type = 'POST';
+		$url = '/admin/home/swiper';
+	} else {
+		console.log('PUT')
 
+		// 修改
+		$type = 'PUT';
+		$url = '/admin/home/swiper/' + $id;
+	}
+	var formData = new FormData($("#form-swiper-add")[0]);
+	console.log(formData)
+	$.ajax({
+		type: $type,
+		url: $url,
+		data: formData,
+		headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+		processData: false,
+  		contentType: false,
+		success: function(data) {
+			// console.log(data);
+		},
+		error: function(err) {
+			var  strToObj = JSON.parse(err.responseText);
+			// console.log(strToObj['errors']);
+		}
+	});
+}
 </script>
 </body>
 </html>
