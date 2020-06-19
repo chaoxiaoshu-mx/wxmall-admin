@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use App\Model\Swiper;
+use App\Model\CateItem;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,4 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::get('/swiper', function () {
 	return Swiper::all();
+});
+Route::get('/cate_item', function () {
+	return CateItem::all();
 });

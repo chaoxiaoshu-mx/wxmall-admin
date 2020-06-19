@@ -75,7 +75,7 @@ class SwiperController extends Controller
                 DB::commit();
                 $swipers = Swiper::all();
                 return view('admin.settings.swiper.index', compact('swipers'));
-                return response()->json(['code' => '200', '保存成功']);
+                // return response()->json(['code' => '200', '保存成功']);
             }catch(Exception $e) {
                 DB::rollBack();
                 return response()->json(['code' => '0', '保存失败', 'data' => $e->getMessage()]);
