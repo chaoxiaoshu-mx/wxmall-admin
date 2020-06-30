@@ -83,7 +83,9 @@
 			<dd>
 				<ul>
 					<li><a data-href="/admin/home/swiper" data-title="轮播图管理" href="javascript:void(0)">轮播图管理</a></li>
-                    <li><a data-href="/admin/home/cate_item" data-title="分类导航管理" href="javascript:void(0)">分类导航管理</a></li>
+          <li><a data-href="/admin/home/cate_item" data-title="分类导航管理" href="javascript:void(0)">分类导航管理</a></li>
+          <li><a data-href="/admin/home/floor" data-title="楼层分类管理" href="javascript:void(0)">楼层分类管理</a></li>
+          <li><a data-href="/admin/home/floorlist" data-title="楼层商品管理" href="javascript:void(0)">楼层商品管理</a></li>
                </ul>
            </dd>
        </dl>

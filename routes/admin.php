@@ -12,5 +12,7 @@ Route::post('logout', 'LoginController@logout');
 Route::group(['prefix' => 'home', 'namespace' => 'Home'], function() {
 	Route::resource('/swiper', 'SwiperController');
 	Route::resource('/cate_item', 'CateItemController');
+	Route::resource('/floor', 'FloorController');
+	Route::resource('/floorlist', 'FloorListController');
 
 });

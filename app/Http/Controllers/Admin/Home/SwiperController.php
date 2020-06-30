@@ -6,6 +6,7 @@ use App\Model\Swiper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use App\Traits\Files;
 use Validator;
 use Excption;
 use DB;
@@ -13,6 +14,8 @@ use App\Http\Requests\SwiperValidate;
 
 class SwiperController extends Controller
 {
+    use Files;
+
     /**
      * Display a listing of the resource.
      *
@@ -41,30 +44,17 @@ class SwiperController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SwiperValidate $request)
+    public function store(Request $request)
     {
-        // 自定义验证规则
-        $rules = [
-            'navigator_url' => 'required|max:255',
-            'open_type' => 'required',
-            'goods_id' => 'required|numeric|min:1',
-            'file'      => 'required|image'
-        ];
-        // 自定义验证信息
-        $messages = [
-            'navigator_url.required' => '跳转链接不能为空',
-            'goods_id.min' => '商品ID必须是大于0的数字',
-            'file.image'    => '只能上传图片文件'
-        ];
-        // 验证
-        $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+        $validator = $this->m_validate($request->all());
+        if ($validator){
+            return $validator;
         }
+
         $upload = $this->upload($request->file);
         if ($upload) {
-            $request['image_src'] = '/upload/files/' . $upload;
+            $request['image_src'] = config('filesystems.url') . $upload;
             // $request->merge('image_src', $upload);  
             // dd($request->except('_token'));
             // 上传成功
@@ -120,23 +110,7 @@ class SwiperController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // 自定义验证规则
-        $rules = [
-            'navigator_url' => 'required|max:255',
-            'open_type' => 'required',
-            'goods_id' => 'required|numeric|min:1',
-        ];
-        // 自定义验证信息
-        $messages = [
-            'navigator_url.required' => '跳转链接不能为空',
-            'goods_id.min' => '商品ID必须是大于0的数字',
-        ];
-        // 验证
-        $validator = Validator::make($request->all(), $rules, $messages);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+        
         if ($request->file !== null) {
             $upload = $this->upload($request->file);
             $request['image_src'] = '/upload/files/' . $upload;
@@ -164,33 +138,36 @@ class SwiperController extends Controller
      */
     public function destroy($id)
     {
-        $swiper = Swiper::find($id);
+        $swiper = Swiper::where('id', $id)->first();
         $swiper->delete();
+        $isDeleted = $this->deleteFile(basename($swiper->image_src));
+        if ($isDeleted) {
+            $swiper->delete();
+        }
     }   
 
-
-    public function upload($file)
+    public function m_validate($input)
     {
-        // 判断文件是否存在
-        if ($file->isValid()){
-            // 原文件名
-            $originalName = $file->getClientOriginalName();
-            // 扩展名
-            $ext = $file->getClientOriginalExtension();
-            // MimeType
-            $type = $file->getClientMimeType();
-            // 临时绝对路径
-            $realPath = $file->getRealPath();
-            $filename = uniqid().'.'.$ext;
-            $bool = Storage::disk()->put($filename,file_get_contents($realPath));
-            // 是否上传成功
-            if ($bool) {
-                return $filename;
-            }
-            return false;
-        }
-    }
+        // 自定义验证规则
+        $rules = [
+            'navigator_url' => 'required|max:255',
+            'open_type' => 'required',
+            'goods_id' => 'required|numeric|min:1',
+        ];
+        // 自定义验证信息
+        $messages = [
+            'navigator_url.required' => '跳转链接不能为空',
+            'goods_id.required' => '商品ID不能为空',
+            'goods_id.min' => '商品ID必须是大于0的数字',
+        ];
+        // 验证
+        $validator = Validator::make($input, $rules, $messages);
 
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        } 
+        return false;
+    }
     
 
 }

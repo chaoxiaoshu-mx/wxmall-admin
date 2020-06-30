@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use App\Model\Swiper;
 use App\Model\CateItem;
+use App\Model\Floor;
+use App\Model\FloorList;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +25,7 @@ Route::get('/swiper', function () {
 });
 Route::get('/cate_item', function () {
 	return CateItem::all();
+});
+Route::get('/floor', function () {
+	return Floor::with('floorlist')->get();
 });

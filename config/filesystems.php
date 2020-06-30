@@ -40,6 +40,7 @@ return [
     | Supported Drivers: "local", "ftp", "sftp", "s3", "rackspace"
     |
     */
+    'url' => env('APP_URL') . '/upload/files/',
 
     'disks' => [
 

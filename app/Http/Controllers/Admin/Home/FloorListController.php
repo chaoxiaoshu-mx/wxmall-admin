@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Home;
 
-use App\Model\CateItem;
+use App\Model\Floor;
+use App\Model\FloorList;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Traits\Files;
@@ -10,9 +11,10 @@ use Validator;
 use Excption;
 use DB;
 
-class CateItemController extends Controller
+class FloorListController extends Controller
 {
     use Files;
+
     /**
      * Display a listing of the resource.
      *
@@ -20,8 +22,8 @@ class CateItemController extends Controller
      */
     public function index()
     {
-        $cate_items = CateItem::all();
-        return view('admin.settings.cate_item.index', compact('cate_items'));
+        $floorlists = FloorList::all();
+        return view('admin.settings.floorlist.index', compact('floorlists'));
     }
 
     /**
@@ -31,8 +33,9 @@ class CateItemController extends Controller
      */
     public function create()
     {
-        $cate_items = null;
-        return view('admin.settings.cate_item.add', compact('cate_items'));
+        $floorlist = null;
+        $floors = Floor::all();
+        return view('admin.settings.floorlist.add', compact('floorlist', 'floors'));
     }
 
     /**
@@ -47,18 +50,20 @@ class CateItemController extends Controller
         if ($validator){
             return $validator;
         }
-        
+
         $upload = $this->upload($request->file);
         if ($upload) {
             $request['image_src'] = config('filesystems.url') . $upload;
+            // $request->merge('image_src', $upload);  
+            // dd($request->except('_token'));
             // 上传成功
             DB::beginTransaction();
             try{
 
-                CateItem::create($request->except('_token'));
+                $floorlist = FloorList::create($request->except('_token'));
                 DB::commit();
-                $cate_items = CateItem::all();
-                return view('admin.settings.cate_item.index', compact('cate_items'));
+                $floorlists = FloorList::all();
+                return view('admin.settings.floorlist.index', compact('floorlists'));
                 // return response()->json(['code' => '200', '保存成功']);
             }catch(Exception $e) {
                 DB::rollBack();
@@ -72,7 +77,7 @@ class CateItemController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\CateItem  $cateItem
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -83,7 +88,7 @@ class CateItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\CateItem  $cateItem
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -95,7 +100,7 @@ class CateItemController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\CateItem  $cateItem
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -106,38 +111,30 @@ class CateItemController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\CateItem  $cateItem
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $cateItem = CateItem::where('id', $id)->first();
-        $isDeleted = $this->deleteFile(basename($cateItem->image_src));
-        if ($isDeleted) {
-            $cateItem->delete();
-        }
+        //
     }
 
     public function m_validate($input)
     {
+        // 自定义验证规则
         $rules = [
             'name' => 'required|max:255',
-            'navigator_url' => 'required|max:255',
-            'open_type' => 'required',
-            'file'      => 'required|image'
         ];
         // 自定义验证信息
         $messages = [
             'name.required' => '名称不能为空',
-            'navigator_url.required' => '跳转链接不能为空',
-            'file.image'    => '只能上传图片文件'
         ];
         // 验证
         $validator = Validator::make($input, $rules, $messages);
 
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
-        }
+        } 
         return false;
     }
 }
