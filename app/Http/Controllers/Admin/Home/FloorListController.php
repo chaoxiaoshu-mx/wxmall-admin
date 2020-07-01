@@ -116,7 +116,11 @@ class FloorListController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $floorlist = FloorList::where('id', $id)->first();
+        $isDeleted = $this->deleteFile(basename($floorlist->image_src));
+        if ($isDeleted) {
+            $floorlist->delete();
+        }
     }
 
     public function m_validate($input)

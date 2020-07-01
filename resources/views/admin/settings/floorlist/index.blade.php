@@ -45,7 +45,7 @@
 					    <td>{{$floorlist->name}}</td>
 					    <td>{{$floorlist->floor_id}}</td>
 						<td>
-							<img width="210" class="floorlist-thumb" src="{{$floorlist->image_src}}">
+							<img width="100" class="floorlist-thumb" src="{{$floorlist->image_src}}">
 						</td>
 					    <td>{{$floorlist->updated_at}}</td>
 						<td class="td-manage"><a style="text-decoration:none" onClick="floorlist_stop(this,'10001')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a style="text-decoration:none" class="ml-5" onClick="floorlist_edit('修改楼层商品','/admin/home/floorlist/{{$floorlist->id}}/edit')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="floorlist_del(this,'{{$floorlist->id}}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>

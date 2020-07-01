@@ -17,9 +17,9 @@ use App\Model\FloorList;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 Route::get('/swiper', function () {
 	return Swiper::all();
 });
