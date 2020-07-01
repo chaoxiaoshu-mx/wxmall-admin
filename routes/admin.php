@@ -16,3 +16,7 @@ Route::group(['prefix' => 'home', 'namespace' => 'Home'], function() {
 	Route::resource('/floorlist', 'FloorListController');
 
 });
+
+Route::group(['prefix' => 'product', 'namespace' => 'Product'], function() {
+	Route::resource('/category', 'ProductCategoryController');
+});

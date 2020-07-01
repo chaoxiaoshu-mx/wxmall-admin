@@ -115,7 +115,6 @@ class FloorController extends Controller
     public function destroy($id)
     {
         $floor = Floor::where('id', $id)->first();
-        $floor->delete();
         $isDeleted = $this->deleteFile(basename($floor->image_src));
         if ($isDeleted) {
             $floor->delete();

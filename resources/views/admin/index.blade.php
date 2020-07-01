@@ -90,10 +90,11 @@
            </dd>
        </dl>
        <dl id="menu-picture">
-           <dt><i class="Hui-iconfont">&#xe613;</i> 图片管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+           <dt><i class="Hui-iconfont">&#xe613;</i> 商品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
            <dd>
             <ul>
-             <li><a data-href="picture-list.html" data-title="图片管理" href="javascript:void(0)">图片管理</a></li>
+             <li><a data-href="/admin/product/category" data-title="商品分类管理" href="javascript:void(0)">商品分类管理</a></li>
+             <li><a data-href="/admin/product" data-title="商品管理" href="javascript:void(0)">商品管理</a></li>
          </ul>
      </dd>
  </dl>
