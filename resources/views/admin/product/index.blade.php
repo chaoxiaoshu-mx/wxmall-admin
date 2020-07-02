@@ -19,30 +19,38 @@
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>商品分类列表</title>
+<title>商品列表</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商品分类管理 <span class="c-gray en">&gt;</span> 商品分类列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商品管理 <span class="c-gray en">&gt;</span> 商品列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 	
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a class="btn btn-primary radius" onclick="product_category_add('添加商品分类','/admin/product/category/create')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加商品分类</a></span> <span class="r">共有数据：<strong>0</strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a class="btn btn-primary radius" onclick="product_add('添加商品','/admin/product/create')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加商品</a></span> <span class="r">共有数据：<strong>0</strong> 条</span> </div>
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
 				<tr class="text-c">
 					<th width="80">ID</th>
+					<th width="80">分类名称</th>
 					<th width="80">名称</th>
+					<th width="80">图片</th>
+					<th width="80">描述</th>
 					<th width="150">更新时间</th>
 					<th width="100">操作</th>
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($product_categorys as $product_category)
+				@foreach($products as $product)
 					<tr class="text-c">
-						<td>{{$product_category->id}}</td>
-					    <td>{{$product_category->name}}</td>
-					    <td>{{$product_category->updated_at}}</td>
-						<td class="td-manage"><a style="text-decoration:none" onClick="product_category_stop(this,'10001')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_category_edit('修改商品分类','/admin/home/product_category/{{$product_category->id}}/edit')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_category_del(this,'{{$product_category->id}}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+						<td>{{$product->id}}</td>
+					    <td>{{$product->category->name}}</td>
+					    <td>{{$product->name}}</td>
+					    <td>
+							<img width="100" class="image-thumb" src="{{$product->image_src}}">
+						</td>
+					    <td>{{$product->description}}</td>
+					    <td>{{$product->updated_at}}</td>
+						<td class="td-manage"><a style="text-decoration:none" onClick="product_stop(this,'10001')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_edit('修改商品','/admin/home/product/{{$product->id}}/edit')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_del(this,'{{$product->id}}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 				    </tr>
 				@endforeach
 			</tbody>
@@ -70,8 +78,8 @@ $('.table-sort').dataTable({
 	]
 });
 
-/*商品分类-添加*/
-function product_category_add(title,url){
+/*商品-添加*/
+function product_add(title,url){
 	var index = layer.open({
 		type: 2,
 		title: title,
@@ -80,8 +88,8 @@ function product_category_add(title,url){
 	layer.full(index);
 }
 
-/*商品分类-查看*/
-function product_category_show(title,url,id){
+/*商品-查看*/
+function product_show(title,url,id){
 	var index = layer.open({
 		type: 2,
 		title: title,
@@ -90,8 +98,8 @@ function product_category_show(title,url,id){
 	layer.full(index);
 }
 
-/*商品分类-编辑*/
-function product_category_edit(title,url){
+/*商品-编辑*/
+function product_edit(title,url){
 	var index = layer.open({
 		type: 2,
 		title: title,
@@ -100,12 +108,12 @@ function product_category_edit(title,url){
 	layer.full(index);
 }
 
-/*商品分类-删除*/
-function product_category_del(obj, id){
+/*商品-删除*/
+function product_del(obj, id){
 	layer.confirm('确认要删除吗？',function(index){
 		$.ajax({
 			type: 'DELETE',
-			url: '/admin/product/category/' + id,
+			url: '/admin/product/' + id,
 			data: {
 				'_token':'{{csrf_token()}}'
 			},
@@ -124,7 +132,7 @@ function batchDel() {
 	layer.confirm('确认要删除吗？',function(index){
 		$.ajax({
 			type: 'DELETE',
-			url: '/admin/product/category/' + id,
+			url: '/admin/product/' + id,
 			data: {
 				'_token':'{{csrf_token()}}'
 			},

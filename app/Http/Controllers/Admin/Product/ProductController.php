@@ -4,9 +4,16 @@ namespace App\Http\Controllers\Admin\Product;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Product;
+use App\Model\ProductCategory;
+use App\Traits\Files;
+use Validator;
+use Excption;
+use DB;
 
 class ProductController extends Controller
 {
+    use Files;
     /**
      * Display a listing of the resource.
      *
@@ -14,8 +21,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // $floorlists = FloorList::all();
-        // return view('admin.settings.floorlist.index', compact('floorlists'));
+        $products = Product::with('category')->get();
+        // dd($products);
+        return view('admin.product.index', compact('products'));
     }
 
     /**
@@ -25,7 +33,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $product = null;
+        $categories = ProductCategory::get(['id', 'name']);
+        return view('admin.product.add', compact('product', 'categories'));
     }
 
     /**
@@ -36,7 +46,32 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = $this->m_validate($request->all());
+        if ($validator){
+            return $validator;
+        }
+
+        $upload = $this->upload($request->file);
+        if ($upload) {
+            $request['image_src'] = config('filesystems.url') . $upload;
+            // $request->merge('image_src', $upload);  
+            // dd($request->except('_token'));
+            // 上传成功
+            DB::beginTransaction();
+            try{
+
+                $product = Product::create($request->except('_token'));
+                DB::commit();
+                $products = Product::all();
+                return view('admin.product.index', compact('products'));
+                // return response()->json(['code' => '200', '保存成功']);
+            }catch(Exception $e) {
+                DB::rollBack();
+                return response()->json(['code' => '0', '保存失败', 'data' => $e->getMessage()]);
+            }
+        } else {
+            return response()->json('fail', 201);
+        }
     }
 
     /**
@@ -82,5 +117,24 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function m_validate($input)
+    {
+        // 自定义验证规则
+        $rules = [
+            'name' => 'required|max:255',
+        ];
+        // 自定义验证信息
+        $messages = [
+            'name.required' => '名称不能为空',
+        ];
+        // 验证
+        $validator = Validator::make($input, $rules, $messages);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        } 
+        return false;
     }
 }

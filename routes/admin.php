@@ -18,5 +18,6 @@ Route::group(['prefix' => 'home', 'namespace' => 'Home'], function() {
 });
 
 Route::group(['prefix' => 'product', 'namespace' => 'Product'], function() {
+	Route::resource('/', 'ProductController');
 	Route::resource('/category', 'ProductCategoryController');
 });

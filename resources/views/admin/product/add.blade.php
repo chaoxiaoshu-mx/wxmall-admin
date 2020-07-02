@@ -19,7 +19,7 @@
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>新增商品分类图</title>
+<title>新增商品</title>
 <style>
 	.error {
 		color: red;
@@ -28,8 +28,10 @@
 </head>
 <body>
 <div class="page-container">
-	<form class="form form-horizontal" id="form-article-add" action="/admin/product/category" enctype="multipart/form-data" method="POST">
-				        {{ csrf_field() }}           
+	<form class="form form-horizontal" id="form-article-add" action="/admin/product" enctype="multipart/form-data" method="POST">
+				        {{ csrf_field() }}    
+
+
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
@@ -40,8 +42,44 @@
 				@endif
 			</div>
 		</div>
-		
+
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商品分类列表：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box">
+					<select name="category_id" class="select">
+						@foreach($categories as $category)
+						<option value="{{$category->id}}">{{$category->name}}</option>
+						@endforeach
+					</select>
+				</span>
+			</div>
+		</div>
 	
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">商品图：</label>
+			<div class="formControls col-xs-8 col-sm-9" style="margin-bottom: 20px">
+				<label for="file">选择文件</label>
+		        <input id="file" type="file" class="form-control" name="file" required>
+		        @if ($errors->has('file'))
+				    <p class="error">{{ $errors->first('file') }}</p>
+				@endif
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">描述：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="textarea" class="input-text" 
+				value="" placeholder="" id="" name="description">
+				@if ($errors->has('description'))
+				    <p class="error">{{ $errors->first('description') }}</p>
+				@endif
+			</div>
+		</div>
+
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
 				<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
