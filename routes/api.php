@@ -5,6 +5,7 @@ use App\Model\Swiper;
 use App\Model\CateItem;
 use App\Model\Floor;
 use App\Model\FloorList;
+use App\Model\Product;
 use App\Model\ProductCategory;
 
 /*
@@ -31,6 +32,12 @@ Route::get('/floor', function () {
 	return Floor::with('floorlist')->get();
 });
 
+Route::get('/categorys', function () {
+	return ProductCategory::get();
+});
+Route::get('/products/{cat_id}', function ($cat_id) {
+	return Product::where('category_id', $cat_id)->get();
+});
 Route::get('/product_category', function () {
 	return ProductCategory::with('product')->get();
 });
