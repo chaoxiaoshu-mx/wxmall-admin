@@ -48,7 +48,7 @@
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>父级分类列表：</label>
 			<div class="formControls col-xs-2 col-sm-3">
 				<span class="select-box">
-					<select name="category_id" class="select">
+					<select name="parent_id" class="select" id="category_first">
 						<option value="0">顶级</option>
 					</select>
 				</span>
@@ -63,41 +63,25 @@
 		</div>
 	
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>父级分类列表：</label>
-			<div class="formControls col-xs-2 col-sm-5">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>分类等级：</label>
+			<div class="formControls col-xs-8 col-sm-9">
 				<span class="select-box">
-					<select name="category_id" class="select">
-						<option value="0">顶级</option>
-					</select>
-				</span>
-			</div>
-			<div class="formControls col-xs-2 col-sm-5">
-				<span class="select-box">
-					<select name="category_id" class="select">
-						
+					<select name="level" class="select">
+						<option value="0">1级</option>
+						<option value="1">2级</option>
+						<option value="2">3级</option>
 					</select>
 				</span>
 			</div>
 		</div>
 
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">商品图：</label>
+			<label class="form-label col-xs-4 col-sm-2">图标：</label>
 			<div class="formControls col-xs-8 col-sm-9" style="margin-bottom: 20px">
 				<label for="file">选择文件</label>
-		        <input id="file" type="file" class="form-control" name="file" required>
+		        <input id="file" type="file" class="form-control" name="file">
 		        @if ($errors->has('file'))
 				    <p class="error">{{ $errors->first('file') }}</p>
-				@endif
-			</div>
-		</div>
-
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">描述：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="textarea" class="input-text" 
-				value="" placeholder="" id="" name="description">
-				@if ($errors->has('description'))
-				    <p class="error">{{ $errors->first('description') }}</p>
 				@endif
 			</div>
 		</div>
@@ -129,7 +113,14 @@
 	request({url: '/category'})
 	.then(result=>{
 		console.log(result)
+		createSelect()
+
 	})
+	function createSelect()
+	{
+		var obj = document.getElementById("category_first");
+		obj.add(new Option("4","4")); 
+	}
 function article_save(){
 	alert("刷新父级的时候会自动关闭弹层。")
 	window.parent.location.reload();
