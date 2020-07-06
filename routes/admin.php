@@ -21,3 +21,7 @@ Route::group(['prefix' => 'product', 'namespace' => 'Product'], function() {
 	Route::resource('/', 'ProductController');
 	Route::resource('/category', 'ProductCategoryController');
 });
+
+Route::group(['prefix' => 'category', 'namespace' => 'Category'], function() {
+	Route::resource('/', 'CategoryController');
+});

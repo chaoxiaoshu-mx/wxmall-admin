@@ -86,18 +86,20 @@
           <li><a data-href="/admin/home/cate_item" data-title="分类导航管理" href="javascript:void(0)">分类导航管理</a></li>
           <li><a data-href="/admin/home/floor" data-title="楼层分类管理" href="javascript:void(0)">楼层分类管理</a></li>
           <li><a data-href="/admin/home/floorlist" data-title="楼层商品管理" href="javascript:void(0)">楼层商品管理</a></li>
-               </ul>
-           </dd>
-       </dl>
-       <dl id="menu-picture">
+        </ul>
+      </dd>
+    </dl>
+    
+    <dl id="menu-picture">
            <dt><i class="Hui-iconfont">&#xe613;</i> 商品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
            <dd>
             <ul>
-             <li><a data-href="/admin/product/category" data-title="商品分类管理" href="javascript:void(0)">商品分类管理</a></li>
+
+             <li><a data-href="/admin/category" data-title="分类管理" href="javascript:void(0)">分类管理</a></li>
              <li><a data-href="/admin/product" data-title="商品管理" href="javascript:void(0)">商品管理</a></li>
          </ul>
      </dd>
- </dl>
+    </dl>
  <dl id="menu-product">
    <dt><i class="Hui-iconfont">&#xe620;</i> 产品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
    <dd>

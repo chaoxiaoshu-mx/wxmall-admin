@@ -7,6 +7,8 @@ use App\Model\Floor;
 use App\Model\FloorList;
 use App\Model\Product;
 use App\Model\ProductCategory;
+use App\Model\Category;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,8 +34,8 @@ Route::get('/floor', function () {
 	return Floor::with('floorlist')->get();
 });
 
-Route::get('/categorys', function () {
-	return ProductCategory::get();
+Route::get('/category', function () {
+	return Category::get();
 });
 Route::get('/products/{cat_id}', function ($cat_id) {
 	return Product::where('category_id', $cat_id)->get();
