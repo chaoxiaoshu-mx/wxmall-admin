@@ -45,8 +45,15 @@
 
 
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>分类列表：</label>
-			<div class="formControls col-xs-8 col-sm-9">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>父级分类列表：</label>
+			<div class="formControls col-xs-2 col-sm-3">
+				<span class="select-box">
+					<select name="category_id" class="select">
+						<option value="0">顶级</option>
+					</select>
+				</span>
+			</div>
+			<div class="formControls col-xs-2 col-sm-3">
 				<span class="select-box">
 					<select name="category_id" class="select">
 						
@@ -55,6 +62,23 @@
 			</div>
 		</div>
 	
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>父级分类列表：</label>
+			<div class="formControls col-xs-2 col-sm-5">
+				<span class="select-box">
+					<select name="category_id" class="select">
+						<option value="0">顶级</option>
+					</select>
+				</span>
+			</div>
+			<div class="formControls col-xs-2 col-sm-5">
+				<span class="select-box">
+					<select name="category_id" class="select">
+						
+					</select>
+				</span>
+			</div>
+		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">商品图：</label>
