@@ -116,11 +116,11 @@ class CategoryController extends Controller
     {
         // 自定义验证规则
         $rules = [
-            'name' => 'required|max:255',
+            'title' => 'required|max:255',
         ];
         // 自定义验证信息
         $messages = [
-            'name.required' => '名称不能为空',
+            'title.required' => '名称不能为空',
         ];
         // 验证
         $validator = Validator::make($input, $rules, $messages);
@@ -130,4 +130,20 @@ class CategoryController extends Controller
         } 
         return false;
     }
+
+    public function getCategoriesTree()
+    {
+        $categories = Category::getTree();
+        
+        return $categories;
+    }
+
+    public function getCategoriesJson() 
+    {
+        $categories = Category::get();
+        return response()->json(['code' => '0', 'msg' =>'true', 'data' =>$categories]);;
+    }
+
+
+
 }

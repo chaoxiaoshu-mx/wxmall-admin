@@ -27,6 +27,11 @@
 		color: red;
 	}
 </style>
+<style media="screen">
+  .tree-txt-active{
+    color :red;
+  }
+</style>
 </head>
 <body>
 <div class="page-container">
@@ -38,9 +43,9 @@
 			<label class="form-label col-xs-4 col-sm-2">名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<input type="text" class="input-text" 
-				value="" placeholder="" id="" name="name">
-				@if ($errors->has('name'))
-				    <p class="error">{{ $errors->first('name') }}</p>
+				value="" placeholder="" id="" name="title">
+				@if ($errors->has('title'))
+				    <p class="error">{{ $errors->first('title') }}</p>
 				@endif
 			</div>
 		</div>
@@ -48,6 +53,8 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>父级分类：</label>
 			<div class="formControls col-xs-8 col-sm-9">
+				<input type="hidden" id="parent_id" name="parent_id" value="0">
+				<input type="hidden" name="level" value="0">
 				<div id="categoryTree"></div>
 			</div>
 		</div>
@@ -91,50 +98,52 @@
 
 <script type="text/javascript">
 
-	request({url: '/category'})
-	.then(result=>{
-		console.log(result)
-		createSelect()
 
-	})
-	function createSelect()
-	{
-		var obj = document.getElementById("category_first");
-		obj.add(new Option("4","4")); 
-	}
+
 function article_save(){
 	alert("刷新父级的时候会自动关闭弹层。")
 	window.parent.location.reload();
 }
+request({url: '/category/tree'})
+	.then(result=>{
+		var data = result;
+		console.log(data)
+		layui.use('tree', function(){
+		    var tree = layui.tree;
+		    
+		    //渲染
+		    var inst1 = tree.render({
+		      elem: '#categoryTree',    //绑定元素
+		      onlyIconControl: true,
+		      showCheckbox:true,
+		      id: 'treeLty',
+		      accordion:true,
+		      data: data,
+		      click: function(obj) {
+		      	// console.log(obj.data.parent_id)
+		      	showTree(obj.data.id);
+		      	$("#parent_id").val(obj.data.id);
+		      	console.log($("#parent_id").val());
+		      },
+		      oncheck: function(obj){
+				 $(".layui-form-checked").removeClass("layui-form-checked");
+				 $("[name='layuiTreeCheck_"+obj.data.id+"']").next().next().click();
+			  }
+		    });
+		    // tree.setChecked('treeLty', 0);
+		    
+		  });
+	})
 
-layui.use('tree', function(){
-    var tree = layui.tree;
-   
-    //渲染
-    var inst1 = tree.render({
-      elem: '#categoryTree',    //绑定元素
-      onlyIconControl: true,
-      data: [{
-      	id: '0',
-        title: '江西' //一级菜单
-        ,children: [{
-  		  id: '2',
-          title: '南昌' //二级菜单
-          
-        }]
-      },{
-      	id: '1',
-        title: '陕西' //一级菜单
-        ,children: [{
-       	  id: '3',
-          title: '西安' //二级菜单
-        }]
-      }],
-      click: function(obj) {
-      	console.log(obj.data)
-      }
-    });
-  });
+	function showTree(id){
+		$(".layui-form-checked").removeClass("layui-form-checked");
+		var input=$("[name='layuiTreeCheck_"+id+"']");
+		input.parents(".layui-tree-pack").show();
+		input.parents(".layui-tree-setHide").addClass("layui-tree-spread").find(".layui-icon-addition").removeClass("layui-icon-addition").addClass("layui-icon-subtraction");
+		input.next().addClass("layui-form-checked");
+		input.parents(".layui-tree-pack").prev().find(".layui-form-checkbox").addClass("layui-form-checked");
+	}
+
 
 </script>
 </body>

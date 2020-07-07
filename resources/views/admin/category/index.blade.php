@@ -66,15 +66,16 @@ $(function(){
                 treeColIndex: 1,//树形图标显示在第几列
                 treeSpid: 0,//最上级的父级id
                 treeIdName: 'id',//id字段的名称
-                treePidName: 'pid',//pid字段的名称
+                treePidName: 'parent_id',//pid字段的名称
                 treeDefaultClose: false,//是否默认折叠
                 treeLinkage: true,//父级展开时是否自动展开所有子级
                 elem: '#categoryTable',
-                url: '/layui/module/data.json',
+                // url: '/layui/module/data.json',
+                url: '/api/category',
                 page: false,
                 cols: [[
                     {type: 'numbers', title: '编号'},
-                    {field: 'name', title: '名称'},
+                    {field: 'title', title: '名称'},
                     {field: 'icon', title: '图标'},
                     {field: 'level', title: '等级'},
                     {templet: complain, title: '操作'}
@@ -102,13 +103,15 @@ $(function(){
 		
         
         function complain(d){//操作中显示的内容
-        	if(true){
+        	if(d.parent_id !== 0){
         		return [
                         '<a class="operation" lay-event="edit" href="javascript:void(0)" onclick="category_edit(\''+ d.id + '\')" title="编辑">',
             	     	'<i class="layui-icon layui-icon-edit"></i></a>',
             	     	'<a class="operation" lay-event="" href="javascript:void(0)" onclick="category_del(\''+ d.id + '\')" title="删除">',
             	     	'<i class="layui-icon layui-icon-delete" ></i></a>',
             	     	].join('');
+        	} else {
+        		return '';
         	}
         }
         //监听工具条

@@ -19,7 +19,6 @@ class CreateProductsTable extends Migration
             $table->string('image_src');
             $table->integer('category_id');
             $table->string('description');
-
             $table->timestamps();
         });
     }

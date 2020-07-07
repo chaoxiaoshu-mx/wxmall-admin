@@ -2,59 +2,59 @@
 	"data":[
 		{
 			"id":1,
-			"name":"大家电",
+			"title":"大家电",
 			"icon":null,
-			"pid":0,
+			"parent_id":0,
 			"level":0
 
 		},
 		{
 			"id":2,
-			"name":"电视",
+			"title":"电视",
 			"icon":null,
-			"pid":1,
+			"parent_id":1,
 			"level":1
 		},
 		{
 			"id":3,
-			"name":"空调",
+			"title":"空调",
 			"icon":null,
-			"pid":1,
+			"parent_id":1,
 			"level":1
 		},
 		{
 			"id":4,
-			"name":"洗衣机",
+			"title":"洗衣机",
 			"icon":null,
-			"pid":1,
+			"parent_id":1,
 			"level":1
 		},
 		{
 			"id":5,
-			"name":"冰箱",
+			"title":"冰箱",
 			"icon":null,
-			"pid":1,
+			"parent_id":1,
 			"level":1
 		}, 
 		{
 			"id":6,
-			"name":"热门推荐",
+			"title":"热门推荐",
 			"icon":null,
-			"pid":0,
+			"parent_id":0,
 			"level":0
 		},
 		{
 			"id":7,
-			"name":"曲面电视",
+			"title":"曲面电视",
 			"icon":null,
-			"pid":2,
+			"parent_id":2,
 			"level":2
 		},
 		{
 			"id":8,
-			"name":"圣诞狂欢",
+			"title":"圣诞狂欢",
 			"icon":null,
-			"pid":6,
+			"parent_id":6,
 			"level":1
 		}
 	],

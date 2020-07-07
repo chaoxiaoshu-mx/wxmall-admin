@@ -34,9 +34,13 @@ Route::get('/floor', function () {
 	return Floor::with('floorlist')->get();
 });
 
-Route::get('/category', function () {
-	return Category::get();
-});
+// Route::get('/category', function () {
+// 	return Category::get();
+// });
+Route::get('/category', 'Admin\Category\CategoryController@getCategoriesJson');
+
+Route::get('/category/tree', 'Admin\Category\CategoryController@getCategoriesTree');
+
 Route::get('/products/{cat_id}', function ($cat_id) {
 	return Product::where('category_id', $cat_id)->get();
 });
