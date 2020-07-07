@@ -1,75 +1,62 @@
 {"msg":"true","code":0,
 	"data":[
 		{
-			"permissionId":1,
-			"permissionName":"系统管理",
-			"permissionUrl":null,
-			"permissionType":null,
+			"id":1,
+			"name":"大家电",
 			"icon":null,
 			"pid":0,
-			"seq":0,
-			"resType":"1"
+			"level":0
+
 		},
 		{
-			"permissionId":2,
-			"permissionName":"账户管理",
-			"permissionUrl":"/link/sysUsers",
-			"permissionType":"管理登录的账户",
+			"id":2,
+			"name":"电视",
 			"icon":null,
 			"pid":1,
-			"seq":1,
-			"resType":"1"
+			"level":1
 		},
 		{
-			"permissionId":3,
-			"permissionName":"部门管理",
-			"permissionUrl":"/link/deparAdministrate",
-			"permissionType":"部门的管理",
+			"id":3,
+			"name":"空调",
 			"icon":null,
 			"pid":1,
-			"seq":2,
-			"resType":"1"
+			"level":1
 		},
 		{
-			"permissionId":4,
-			"permissionName":"角色管理",
-			"permissionUrl":"/link/sysRoleManage",
-			"permissionType":"设定角色的权限",
+			"id":4,
+			"name":"洗衣机",
 			"icon":null,
 			"pid":1,
-			"seq":3,
-			"resType":"1"
+			"level":1
 		},
 		{
-			"permissionId":5,
-			"permissionName":"权限管理",
-			"permissionUrl":"/link/sysPermission",
-			"permissionType":"对权限进行编辑",
+			"id":5,
+			"name":"冰箱",
 			"icon":null,
 			"pid":1,
-			"seq":4,
-			"resType":"1"
+			"level":1
 		}, 
 		{
-			"permissionId":6,
-			"permissionName":"系统日志",
-			"permissionUrl":"/link/sysLog",
-			"permissionType":"系统日志",
+			"id":6,
+			"name":"热门推荐",
 			"icon":null,
-			"pid":1,
-			"seq":5,
-			"resType":"1"
+			"pid":0,
+			"level":0
 		},
 		{
-			"permissionId":7,
-			"permissionName":"系统日志1",
-			"permissionUrl":"/link/sysLog",
-			"permissionType":"系统日志1",
+			"id":7,
+			"name":"曲面电视",
 			"icon":null,
 			"pid":2,
-			"seq":6,
-			"resType":"1"
+			"level":2
+		},
+		{
+			"id":8,
+			"name":"圣诞狂欢",
+			"icon":null,
+			"pid":6,
+			"level":1
 		}
 	],
-"count":7
+"count":8
 }

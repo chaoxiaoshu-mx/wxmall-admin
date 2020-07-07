@@ -15,6 +15,8 @@
 <link rel="stylesheet" type="text/css" href="{{asset('lib/Hui-iconfont/1.0.8/iconfont.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('static/h-ui.admin/skin/default/skin.css')}}" id="skin" />
 <link rel="stylesheet" type="text/css" href="{{asset('static/h-ui.admin/css/style.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('/layui/css/layui.css')}}" />
+
 <!--[if IE 6]>
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
@@ -42,39 +44,15 @@
 				@endif
 			</div>
 		</div>
-
-
+		
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>父级分类列表：</label>
-			<div class="formControls col-xs-2 col-sm-3">
-				<span class="select-box">
-					<select name="parent_id" class="select" id="category_first">
-						<option value="0">顶级</option>
-					</select>
-				</span>
-			</div>
-			<div class="formControls col-xs-2 col-sm-3">
-				<span class="select-box">
-					<select name="category_id" class="select">
-						
-					</select>
-				</span>
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>父级分类：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div id="categoryTree"></div>
 			</div>
 		</div>
 	
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>分类等级：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<span class="select-box">
-					<select name="level" class="select">
-						<option value="0">1级</option>
-						<option value="1">2级</option>
-						<option value="2">3级</option>
-					</select>
-				</span>
-			</div>
-		</div>
-
+		
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">图标：</label>
 			<div class="formControls col-xs-8 col-sm-9" style="margin-bottom: 20px">
@@ -107,9 +85,12 @@
 <script type="text/javascript" src="{{asset('lib/jquery.validation/1.14.0/validate-methods.js')}}"></script> 
 <script type="text/javascript" src="{{asset('lib/jquery.validation/1.14.0/messages_zh.js')}}"></script> 
 <script type="text/javascript" src="{{asset('lib/webuploader/0.1.5/webuploader.min.js')}}"></script> 
+<script type="text/javascript" src="{{asset('/layui/layui.js')}}"></script>
+
 <script src="{{asset('js/request.js')}}"></script>
 
 <script type="text/javascript">
+
 	request({url: '/category'})
 	.then(result=>{
 		console.log(result)
@@ -125,6 +106,35 @@ function article_save(){
 	alert("刷新父级的时候会自动关闭弹层。")
 	window.parent.location.reload();
 }
+
+layui.use('tree', function(){
+    var tree = layui.tree;
+   
+    //渲染
+    var inst1 = tree.render({
+      elem: '#categoryTree',    //绑定元素
+      onlyIconControl: true,
+      data: [{
+      	id: '0',
+        title: '江西' //一级菜单
+        ,children: [{
+  		  id: '2',
+          title: '南昌' //二级菜单
+          
+        }]
+      },{
+      	id: '1',
+        title: '陕西' //一级菜单
+        ,children: [{
+       	  id: '3',
+          title: '西安' //二级菜单
+        }]
+      }],
+      click: function(obj) {
+      	console.log(obj.data)
+      }
+    });
+  });
 
 </script>
 </body>

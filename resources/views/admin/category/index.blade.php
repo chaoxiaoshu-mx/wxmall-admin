@@ -29,36 +29,7 @@
 	
 	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a class="btn btn-primary radius" onclick="category_add('添加分类','/admin/category/create')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加分类</a></span> <span class="r">共有数据：<strong>0</strong> 条</span> </div>
 	<div class="mt-20">
-		<!-- <table class="table table-border table-bordered table-bg table-hover table-sort">
-			<thead>
-				<tr class="text-c">
-					<th width="80">ID</th>
-					<th width="80">名称</th>
-					<th width="80">父级分类</th>
-					<th width="80">分类等级</th>
-					<th width="80">图标</th>
-					<th width="150">更新时间</th>
-					<th width="100">操作</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach($categories as $category)
-					<tr class="text-c">
-						<td>{{$category->id}}</td>
-					    <td>{{$category->name}}</td>
-					    <td>{{$category->parent_id}}</td>
-					    <td>{{$category->level}}</td>
-					    <td>
-							<img width="100" class="image-thumb" src="{{$category->icon}}">
-						</td>
-					    <td>{{$category->updated_at}}</td>
-						<td class="td-manage"><a style="text-decoration:none" onClick="category_stop(this,'10001')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a style="text-decoration:none" class="ml-5" onClick="category_edit('修改分类','/admin/home/category/{{$category->id}}/edit')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="category_del(this,'{{$category->id}}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-				    </tr>
-				@endforeach
-			</tbody>
-		</table> -->
-
-		<table id="permissionTable" class="layui-table" lay-filter="permissionTable"></table>
+		<table id="categoryTable" class="layui-table" lay-filter="categoryTable"></table>
 	</div>
 </div>
 
@@ -76,14 +47,7 @@
 <script type="text/javascript" src="{{asset('/layui/layui.js')}}"></script>
 
 <script type="text/javascript">
-$('.table-sort').dataTable({
-	"aaSorting": [[ 0, "desc" ]],//默认第几个排序
-	"bStateSave": true,//状态保存
-	"aoColumnDefs": [
-	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-	  {"orderable":false,"aTargets":[1, 2, 3]}// 制定列不参与排序
-	]
-});
+
 $(function(){
     layui.config({
         base: '/layui/module/'
@@ -101,28 +65,18 @@ $(function(){
             treetable.render({
                 treeColIndex: 1,//树形图标显示在第几列
                 treeSpid: 0,//最上级的父级id
-                treeIdName: 'permissionId',//id字段的名称
+                treeIdName: 'id',//id字段的名称
                 treePidName: 'pid',//pid字段的名称
                 treeDefaultClose: false,//是否默认折叠
                 treeLinkage: true,//父级展开时是否自动展开所有子级
-                elem: '#permissionTable',
+                elem: '#categoryTable',
                 url: '/layui/module/data.json',
                 page: false,
                 cols: [[
                     {type: 'numbers', title: '编号'},
-                    {field: 'permissionName', title: '资源名称'},
-                    {field: 'permissionUrl', title: '资源路径'},
-                    {field: 'permissionType', title: '资源简介'},
-                    {field: 'pid', title: '排序'},
-                    {field: 'resType', title: '类型',
-                    	templet: function(d){
-                    		if(d.resType==0){
-                    			return '菜单';
-                    		}else{
-                    			return '按钮';
-                    		}
-                        }	
-                    },
+                    {field: 'name', title: '名称'},
+                    {field: 'icon', title: '图标'},
+                    {field: 'level', title: '等级'},
                     {templet: complain, title: '操作'}
                 ]],
                 done: function () {
@@ -135,11 +89,11 @@ $(function(){
         
 		//触发三个button按钮
         $('#btn-expand').click(function () {
-            treetable.expandAll('#permissionTable');
+            treetable.expandAll('#categoryTable');
         });
 
         $('#btn-fold').click(function () {
-            treetable.foldAll('#permissionTable');
+            treetable.foldAll('#categoryTable');
         });
 
         $('#btn-refresh').click(function () {
@@ -148,20 +102,17 @@ $(function(){
 		
         
         function complain(d){//操作中显示的内容
-        	if(true || d.permissionUrl!=null){
+        	if(true){
         		return [
-                        '<a class="operation" lay-event="edit" href="javascript:void(0)" onclick="editDepartment(\''+ d.permissionId + '\')" title="编辑">',
+                        '<a class="operation" lay-event="edit" href="javascript:void(0)" onclick="category_edit(\''+ d.id + '\')" title="编辑">',
             	     	'<i class="layui-icon layui-icon-edit"></i></a>',
-            	     	'<a class="operation" lay-event="" href="javascript:void(0)" onclick="delDepartment(\''+ d.permissionId + '\')" title="删除">',
+            	     	'<a class="operation" lay-event="" href="javascript:void(0)" onclick="category_del(\''+ d.id + '\')" title="删除">',
             	     	'<i class="layui-icon layui-icon-delete" ></i></a>',
             	     	].join('');
-        	}else{
-        		return '';
         	}
-        	
         }
         //监听工具条
-        table.on('tool(permissionTable)', function (obj) {
+        table.on('tool(categoryTable)', function (obj) {
             var data = obj.data;
             var layEvent = obj.event;
 			if(data.permissionName!=null){
@@ -197,17 +148,19 @@ function category_show(title,url,id){
 }
 
 /*分类-编辑*/
-function category_edit(title,url){
+function category_edit(id){
+	url = "/admin/category/" + id + "/edit"
+	console.log(url)
 	var index = layer.open({
 		type: 2,
-		title: title,
+		title: '编辑',
 		content: url
 	});
 	layer.full(index);
 }
 
 /*分类-删除*/
-function category_del(obj, id){
+function category_del(id){
 	layer.confirm('确认要删除吗？',function(index){
 		$.ajax({
 			type: 'DELETE',
