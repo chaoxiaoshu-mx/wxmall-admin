@@ -55,7 +55,8 @@ class CategoryController extends Controller
             
         DB::beginTransaction();
         try{
-
+            
+            $request['level'] = $request->get('level') + 1;
             $category = Category::create($request->except('_token'));
             DB::commit();
             $categories = Category::all();
@@ -86,7 +87,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        dd($id);
     }
 
     /**
@@ -109,7 +110,35 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        dd('$id');
+        $category = Category::where('id', $id)->first();
+        dd($category->icon);
+        
+        if($category->icon !== "") {
+            $isDeleted = $this->deleteFile(basename($category->icon));
+            if ($isDeleted) {
+                $category->delete();
+            }
+        } else {
+            $category->delete();
+        }
+    }
+
+    public function delete(Request $request)
+    {
+        $id = $request->get('id');
+        $category = Category::where('id', $id)->first();
+        
+        if($category->icon !== "") {
+            $isDeleted = $this->deleteFile(basename($category->icon));
+            if ($isDeleted) {
+                $category->delete();
+                return response()->json(['code' => '200', 'msg' =>'true']);;
+            }
+        } else {
+            $category->delete();
+            return response()->json(['code' => '200', 'msg' =>'true']);;
+        }
     }
 
     public function m_validate($input)

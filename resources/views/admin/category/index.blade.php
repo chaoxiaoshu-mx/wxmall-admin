@@ -5,6 +5,7 @@
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <!--[if lt IE 9]>
 <script type="text/javascript" src="lib/html5shiv.js"></script>
@@ -21,6 +22,12 @@
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
+<style type="text/css">
+	.laytable-cell-1-picurl{
+		height: 100%;
+		max-width: 100%;
+	}
+</style>
 <title>分类列表</title>
 </head>
 <body>
@@ -32,9 +39,17 @@
 		<table id="categoryTable" class="layui-table" lay-filter="categoryTable"></table>
 	</div>
 </div>
-
+<style type="text/css">
+    .layui-table-cell{
+        text-align:center;
+        height: auto;
+        white-space: normal;
+    }
+</style>
 <!--_footer 作为公共模版分离出去-->
-<script type="text/javascript" src="{{asset('/lib/jquery/1.9.1/jquery.min.js')}}"></script> 
+<!-- <script type="text/javascript" src="{{asset('/js/jquery1.4.2.js')}}"></script>  -->
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+// <script type="text/javascript" src="{{asset('/lib/jquery/1.9.1/jquery.min.js')}}"></script> 
 <script type="text/javascript" src="{{asset('/lib/layer/2.4/layer.js')}}"></script>
 <script type="text/javascript" src="{{asset('/static/h-ui/js/H-ui.min.js')}}"></script> 
 <script type="text/javascript" src="{{asset('/static/h-ui.admin/js/H-ui.admin.js')}}"></script> <!--/_footer 作为公共模版分离出去-->
@@ -76,7 +91,7 @@ $(function(){
                 cols: [[
                     {type: 'numbers', title: '编号'},
                     {field: 'title', title: '名称'},
-                    {field: 'icon', title: '图标'},
+                    {field: 'icon', title: '图标', templet: showIcon},
                     {field: 'level', title: '等级'},
                     {templet: complain, title: '操作'}
                 ]],
@@ -100,7 +115,13 @@ $(function(){
         $('#btn-refresh').click(function () {
             renderTable();
         });
-		
+		function showIcon(d){
+			if(d.icon !== "") {
+				return `<div><img src="` + d.icon + `"></div>`
+			} else {
+				return ''
+			}
+		}
         
         function complain(d){//操作中显示的内容
         	if(d.parent_id !== 0){
@@ -166,19 +187,23 @@ function category_edit(id){
 function category_del(id){
 	layer.confirm('确认要删除吗？',function(index){
 		$.ajax({
-			type: 'DELETE',
-			url: '/admin/category/' + id,
+			type: 'POST',
+			url: '/admin/category/del',
+			dataType:'JSON',
 			data: {
-				'_token':'{{csrf_token()}}'
+				'_token':'{{csrf_token()}}',
+				'id': id
 			},
 			success: function(data){
-				$(obj).parents("tr").remove();
+				console.log('success')
+				// $(obj).parents("tr").remove();
 				layer.msg('已删除!',{icon:1,time:1000});
 			},
 			error:function(data) {
 				console.log(data.msg);
 			},
-		});		
+		});	
+		return false;	
 	});
 }
 /*批量删除 */

@@ -54,7 +54,7 @@
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>父级分类：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<input type="hidden" id="parent_id" name="parent_id" value="0">
-				<input type="hidden" name="level" value="0">
+				<input type="hidden" name="level" id="level" value="0">
 				<div id="categoryTree"></div>
 			</div>
 		</div>
@@ -123,7 +123,9 @@ request({url: '/category/tree'})
 		      	// console.log(obj.data.parent_id)
 		      	showTree(obj.data.id);
 		      	$("#parent_id").val(obj.data.id);
-		      	console.log($("#parent_id").val());
+		      	$("#level").val(obj.data.level);
+		      	
+		      	console.log($("#level").val());
 		      },
 		      oncheck: function(obj){
 				 $(".layui-form-checked").removeClass("layui-form-checked");
